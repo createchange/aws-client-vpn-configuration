@@ -1,9 +1,12 @@
 # HOW TO USE:
-At the root level is a Pipfile. Initiate a pipenv with `pipenv install && pipenv shell` to load environment variables
 
-terraform commands are run from within the ansible folder
+Set AWS keys in .env file. Initiate a pipenv with `pipenv install && pipenv shell` to load environment variables.
+
+Terraform commands are run from within the ansible folder
 
 e.g. `ansible-playbook playbooks/terraform-plan.yml`
+
+Terraform environment may need to be initalized.
 
 # To Do:
 
