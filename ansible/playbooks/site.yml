@@ -1,0 +1,2 @@
+---
+- import_playbook: generate-terraform-files.yml 

@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  gather_facts: no
+  tasks:
+
+  - terraform:
+      project_path: '../../terraform/env/dev/'
+      plan_file: 'clientvpn.tfplan'
+      state: planned
+    register: terraform
+
+  - debug: 
+      var: terraform.stdout_lines
+

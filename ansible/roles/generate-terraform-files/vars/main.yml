@@ -1,0 +1,4 @@
+---
+# vars file for generate-terraform-files
+
+users: ["jhw", "wrt", "smj"]

@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  gather_facts: no
+  tasks:
+
+  - terraform:
+      project_path: '../../terraform/env/dev/'
+      plan_file: 'clientvpn.tfplan'
+      state: absent
+    register: terraform
+
+  - debug: 
+      var: terraform.stdout_lines
+
+  - name: remove ovpn files
+    file: 
+      path: "{{ item }}"
+      state: absent
+    with_fileglob:
+            - "../../vpn-config-files/terraform*"

@@ -1,0 +1,19 @@
+---
+- hosts: localhost
+  gather_facts: no
+  tasks:
+
+  - terraform:
+      project_path: '../../terraform/env/dev/'
+      plan_file: 'clientvpn.tfplan'
+      state: present
+    register: terraform
+
+  - debug: 
+      var: terraform.stdout_lines
+
+  - name: generate ovpn files
+    command: ./getVpnConfigurations.py
+    args:
+      chdir: ../../
+

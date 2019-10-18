@@ -1,0 +1,55 @@
+---
+- name: generate module main.tf templates with users
+  template:
+    src: ../roles/generate-terraform-files/templates/client-certs.tf
+    dest: ../roles/generate-terraform-files/files/main/1-{{ item }}-client-cert.tf
+  with_items: "{{ users }}"
+
+- name: assemble module main.tf from fragments
+  assemble:
+    src: ../roles/generate-terraform-files/files/main/
+    dest: ../roles/generate-terraform-files/files/completed_configs/module_main.tf
+    ignore_hidden: yes
+
+- name: copy module main.tf to terraform directory
+  copy:
+    src: ../roles/generate-terraform-files/files/completed_configs/module_main.tf
+    dest: ../../terraform/modules/acm/main.tf
+    backup: yes
+
+- name: generate module output.tf templates with users
+  template:
+    src: ../roles/generate-terraform-files/templates/output.tf
+    dest: ../roles/generate-terraform-files/files/output/1-{{ item }}-output.tf
+  with_items: "{{ users }}"
+
+- name: assemble module output.tf from fragments
+  assemble:
+    src: ../roles/generate-terraform-files/files/output/
+    dest: ../roles/generate-terraform-files/files/completed_configs/module_output.tf
+    ignore_hidden: yes
+
+- name: copy module output.tf to terraform directory
+  copy:
+    src: ../roles/generate-terraform-files/files/completed_configs/module_output.tf
+    dest: ../../terraform/modules/acm/output.tf
+    backup: yes
+
+
+- name: generate top level output.tf templates with users
+  template:
+    src: ../roles/generate-terraform-files/templates/toplevel_output.tf
+    dest: ../roles/generate-terraform-files/files/toplevel_output/1-{{ item }}-toplevel_output.tf
+  with_items: "{{ users }}"
+
+- name: assemble top level output.tf from fragments
+  assemble:
+    src: ../roles/generate-terraform-files/files/toplevel_output/
+    dest: ../roles/generate-terraform-files/files/completed_configs/toplevel_output.tf
+    ignore_hidden: yes
+
+- name: copy top level main.tf to terraform directory
+  copy:
+    src: ../roles/generate-terraform-files/files/completed_configs/toplevel_output.tf
+    dest: ../../terraform/env/dev/output.tf
+    backup: yes
